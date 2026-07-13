@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4fa840220cfaaeafa5c099810d9e6822",
+    "content-hash": "253a85108f2e97ae7e4f2d674f6a8d9a",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1210,16 +1210,16 @@
         },
         {
             "name": "laravel/ai",
-            "version": "v0.9.0",
+            "version": "v0.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/ai.git",
-                "reference": "1091772a6c2dba104c741286b4a73cc71a47cd00"
+                "reference": "b23bc857576d7c4b3bb52ffd8be936ae74005d23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/ai/zipball/1091772a6c2dba104c741286b4a73cc71a47cd00",
-                "reference": "1091772a6c2dba104c741286b4a73cc71a47cd00",
+                "url": "https://api.github.com/repos/laravel/ai/zipball/b23bc857576d7c4b3bb52ffd8be936ae74005d23",
+                "reference": "b23bc857576d7c4b3bb52ffd8be936ae74005d23",
                 "shasum": ""
             },
             "require": {
@@ -1280,7 +1280,7 @@
                 "issues": "https://github.com/laravel/ai/issues",
                 "source": "https://github.com/laravel/ai"
             },
-            "time": "2026-07-07T17:38:48+00:00"
+            "time": "2026-06-10T11:23:35+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2904,6 +2904,100 @@
                 }
             ],
             "time": "2025-12-27T19:41:33+00:00"
+        },
+        {
+            "name": "promptphp/intercept",
+            "version": "v0.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/promptphp/intercept.git",
+                "reference": "d8a6533a5e0d10b3ee6303227c7adb5b9e530d29"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/promptphp/intercept/zipball/d8a6533a5e0d10b3ee6303227c7adb5b9e530d29",
+                "reference": "d8a6533a5e0d10b3ee6303227c7adb5b9e530d29",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/ai": "^0.8.0",
+                "php": "^8.4.0"
+            },
+            "replace": {
+                "promptphp/intercept-injection-guard": "self.version",
+                "promptphp/intercept-pii-redactor": "self.version",
+                "promptphp/intercept-support": "self.version"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.29.1",
+                "mrpunyapal/rector-pest": "^0.2.15",
+                "orchestra/testbench": "^10.0|^11.0",
+                "pestphp/pest": "^5.0.0",
+                "pestphp/pest-plugin-type-coverage": "^5.0.0",
+                "phpstan/phpstan": "^2.1.54",
+                "rector/rector": "^2.4.2",
+                "symfony/var-dumper": "^8.0.8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "PromptPHP\\Intercept\\Support\\InterceptServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PromptPHP\\Intercept\\": "src/",
+                    "PromptPHP\\Intercept\\Support\\": "src/Support/src/",
+                    "PromptPHP\\Intercept\\PIIRedactor\\": "src/PIIRedactor/src/",
+                    "PromptPHP\\Intercept\\InjectionGuard\\": "src/InjectionGuard/src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Victor Ukam",
+                    "email": "victorjohnukam@gmail.com",
+                    "homepage": "https://github.com/veeqtoh",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A modular, drop-in middleware kit for Laravel AI agents. Protect, observe, and govern your AI agents with granular, install-what-you-need middleware packages.",
+            "homepage": "https://intercept.promptphp.com",
+            "keywords": [
+                "Agent",
+                "ai",
+                "governance",
+                "laravel",
+                "middleware",
+                "observability",
+                "performance",
+                "pii-redaction",
+                "prompt-injection",
+                "promptphp",
+                "rate-limiting",
+                "security",
+                "semantic-caching"
+            ],
+            "support": {
+                "issues": "https://github.com/promptphp/intercept/issues",
+                "source": "https://github.com/promptphp/intercept/tree/v0.1.4"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/paypalme/veeqtoh",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/veeqtoh",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-06-24T20:55:25+00:00"
         },
         {
             "name": "psr/clock",
