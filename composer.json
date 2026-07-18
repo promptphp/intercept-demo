@@ -13,7 +13,7 @@
         "laravel/ai": "*",
         "laravel/framework": "^13.8",
         "laravel/tinker": "^3.0",
-        "promptphp/intercept": "dev-main"
+        "promptphp/intercept": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

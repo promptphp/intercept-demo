@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "686353400f51987f9434193cfeb8969c",
+    "content-hash": "8a0ab88c8a94d753ab72652f197a36b5",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -2910,7 +2910,7 @@
         },
         {
             "name": "promptphp/intercept",
-            "version": "dev-main",
+            "version": "v0.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/promptphp/intercept.git",
@@ -2941,7 +2941,6 @@
                 "rector/rector": "^2.4.2",
                 "symfony/var-dumper": "^8.0.8"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -2989,7 +2988,7 @@
             ],
             "support": {
                 "issues": "https://github.com/promptphp/intercept/issues",
-                "source": "https://github.com/promptphp/intercept/tree/main"
+                "source": "https://github.com/promptphp/intercept/tree/v0.1.7"
             },
             "funding": [
                 {
@@ -10237,9 +10236,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "promptphp/intercept": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
