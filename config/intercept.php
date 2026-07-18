@@ -89,6 +89,8 @@ return [
                 'ip_address',
                 'api_key',
                 'bearer_token',
+                'mac_address',
+                'url',
             ],
 
             /**
