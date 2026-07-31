@@ -60,6 +60,18 @@ return [
              * when logging injection detections. Prompts may contain sensitive user data.
              */
             'log_prompt_preview' => false,
+
+            /**
+             * Whether to scan the tool approval decisions carried by a resumed run.
+             *
+             * When a paused run is resumed, the prompt text is empty and the only new content
+             * is what a human supplied while resolving the pending tool calls: edited tool
+             * arguments and rejection results.
+             *
+             * Resumed prompts cannot be rewritten, so 'sanitize' and 'warn' degrade to logging
+             * on this path. The 'block' action still stops the run.
+             */
+            'scan_approval_decisions' => true,
         ],
 
         /*
@@ -131,6 +143,18 @@ return [
              * Whether to include a short prompt preview in logs.
              */
             'log_preview' => false,
+
+            /**
+             * Whether to scan the tool approval decisions carried by a resumed run.
+             *
+             * When a paused run is resumed, the prompt text is empty and the only new content
+             * is what a human supplied while resolving the pending tool calls: edited tool
+             * arguments and rejection results.
+             *
+             * Resumed prompts cannot be rewritten, so 'redact' and 'mask' degrade to logging
+             * on this path. Blocked entities and the 'block' action still stop the run.
+             */
+            'scan_approval_decisions' => true,
         ],
     ],
 ];
