@@ -4,13 +4,14 @@
             <p class="mb-3 text-sm font-medium text-indigo-400">promptphp/intercept + Laravel AI SDK</p>
             <h1 class="text-4xl font-bold tracking-tight">Guardrails for your AI agents</h1>
             <p class="mt-4 max-w-2xl text-lg leading-relaxed text-zinc-400">
-                Three demo apps, three agents, three different middleware policies — all powered by the same
-                two Intercept middleware: <span class="text-zinc-200">PromptInjectionGuard</span> and
-                <span class="text-zinc-200">PIIRedactor</span>.
+                Four demo apps, four agents, four different middleware policies — built from three Intercept
+                middleware: <span class="text-zinc-200">PromptInjectionGuard</span>,
+                <span class="text-zinc-200">PIIRedactor</span>, and
+                <span class="text-zinc-200">ToolApprovalGuard</span>.
             </p>
         </div>
 
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             @foreach ([
                 [
                     'route' => 'demos.support',
@@ -32,6 +33,13 @@
                     'title' => 'Log Debugger',
                     'description' => 'Paste production logs safely: PII is masked and leaked secrets block the request.',
                     'chips' => ['PIIRedactor: mask + block secrets'],
+                ],
+                [
+                    'route' => 'demos.approvals',
+                    'emoji' => '✋',
+                    'title' => 'Approval Desk',
+                    'description' => 'An agent pauses for human approval. Both the call it proposed and the human\'s reply get scanned.',
+                    'chips' => ['ToolApprovalGuard: block', 'scanApprovalDecisions'],
                 ],
             ] as $index => $card)
                 <a href="{{ route($card['route']) }}"

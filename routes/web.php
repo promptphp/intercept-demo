@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Demos\ApprovalDeskController;
 use App\Http\Controllers\Demos\LogDebuggerController;
 use App\Http\Controllers\Demos\SupportChatController;
 use App\Http\Controllers\Demos\TriageController;
@@ -17,4 +18,9 @@ Route::prefix('demos')->name('demos.')->group(function () {
 
     Route::get('debugger', [LogDebuggerController::class, 'show'])->name('debugger');
     Route::post('debugger', [LogDebuggerController::class, 'store'])->name('debugger.store');
+
+    Route::get('approvals', [ApprovalDeskController::class, 'show'])->name('approvals');
+    Route::post('approvals', [ApprovalDeskController::class, 'store'])->name('approvals.store');
+    Route::post('approvals/resume', [ApprovalDeskController::class, 'resume'])->name('approvals.resume');
+    Route::post('approvals/reset', [ApprovalDeskController::class, 'reset'])->name('approvals.reset');
 });

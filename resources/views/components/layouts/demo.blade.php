@@ -24,6 +24,7 @@
                     ['route' => 'demos.support', 'label' => 'Support Chat', 'number' => '1', 'hint' => 'Block injections & PII'],
                     ['route' => 'demos.triage', 'label' => 'Email Triage', 'number' => '2', 'hint' => 'Sanitize untrusted emails'],
                     ['route' => 'demos.debugger', 'label' => 'Log Debugger', 'number' => '3', 'hint' => 'Keep secrets on your server'],
+                    ['route' => 'demos.approvals', 'label' => 'Approval Desk', 'number' => '4', 'hint' => 'Guard both ends of a pause'],
                 ] as $item)
                     <a href="{{ route($item['route']) }}"
                         class="group flex items-center gap-3 rounded-lg px-3 py-2.5 transition {{ request()->routeIs($item['route']) ? 'bg-indigo-500/15 text-indigo-300' : 'text-zinc-400 hover:bg-zinc-800/70 hover:text-zinc-200' }}">
