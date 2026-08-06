@@ -156,5 +156,84 @@ return [
              */
             'scan_approval_decisions' => true,
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Tool Approval Guard Middleware
+        |--------------------------------------------------------------------------
+        |
+        | The Tool Approval Guard middleware inspects the tool calls an agent proposes
+        | while pausing for human approval, before they are surfaced for review.
+        |
+        | Unlike the other middleware, this one acts on the response, because the tool
+        | calls it guards are proposed by the model rather than supplied by the user.
+        |
+        */
+        'tool_approval_guard' => [
+
+            /*
+             * The action to take when a proposed tool call is flagged.
+             * Supported values: 'block', 'log'.
+             *
+             * There is no mutating action. A proposed tool call is part of the paused turn
+             * the provider recorded, so rewriting it would desynchronise the resumed run.
+             *
+             * 'block_entities' below stops the run whatever this is set to, so an observe-only
+             * rollout needs 'log' here and an empty 'block_entities'.
+             */
+            'action' => 'block',
+
+            /**
+             * The tools that may be proposed. An empty list permits every tool.
+             */
+            'allowed_tools' => [],
+
+            /**
+             * The tools that may never be proposed.
+             */
+            'denied_tools' => [],
+
+            /**
+             * Whether to scan proposed arguments for secret-like data.
+             * A key or a card number in an outbound argument is a strong exfiltration signal.
+             */
+            'scan_pii' => true,
+
+            /**
+             * Whether to scan proposed arguments for prompt injection patterns.
+             *
+             * Off by default: prose written for a human reader routinely matches the patterns.
+             * Enable it when an argument feeds another model or agent rather than a person.
+             */
+            'scan_injection' => false,
+
+            /**
+             * The entities that should be detected in proposed arguments.
+             *
+             * Narrower than the PII Redactor list by design. In a proposed argument an email
+             * address is usually the tool's own parameter, not an exfiltration signal. Adding
+             * 'email', 'phone', 'url', 'ip_address' or 'mac_address' will flag legitimate calls.
+             */
+            'entities' => [
+                'credit_card',
+                'api_key',
+                'bearer_token',
+            ],
+
+            /**
+             * The entities that should always block, regardless of the action above.
+             */
+            'block_entities' => [
+                'credit_card',
+                'api_key',
+                'bearer_token',
+            ],
+
+            /**
+             * Whether to include a short argument preview in logs.
+             * Matched values are always logged as hashes regardless of this setting.
+             */
+            'log_preview' => false,
+        ],
     ],
 ];
