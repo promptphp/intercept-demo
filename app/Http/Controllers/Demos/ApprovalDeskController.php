@@ -71,13 +71,13 @@ class ApprovalDeskController extends Controller
             );
         } catch (PromptInjectionGuardException $e) {
             return $this->blocked(
-                'A tool argument you edited contains a prompt injection. The run was stopped before it reached the provider.',
+                'A tool argument you edited contains a prompt injection. The run was stopped before the tool ran or the provider saw it.',
                 $e->getMessage(),
                 $recorder,
             );
         } catch (PIIRedactorException) {
             return $this->blocked(
-                'Something you typed carries high-risk data (a card number or a secret). The run was stopped before it reached the provider.',
+                'Something you typed carries high-risk data (a card number or a secret). The run was stopped before the tool ran or the provider saw it.',
                 'PII detected in tool approval decisions.',
                 $recorder,
             );

@@ -76,7 +76,6 @@ window.demo = {
                     ...record.findings.map(
                         (f) => `  ${f.type}  ${f.tool}${f.field ? `.${f.field}` : ''}${f.detail ? `  (${f.detail})` : ''}`
                     ),
-                    record.degradedFrom ? `degraded_from: ${record.degradedFrom}  (a streamed run cannot be blocked)` : null,
                 ].filter(Boolean).join('\n'))
                 .join('\n\n');
         } else {
