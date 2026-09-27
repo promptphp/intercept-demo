@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae5daa04e2cd7ae2887c88adf9f571d0",
+    "content-hash": "f6d187c2db0c14553eaeaaf42edb4bb5",
     "packages": [
         {
             "name": "brick/math",
@@ -2707,16 +2707,16 @@
         },
         {
             "name": "promptphp/intercept",
-            "version": "v1.0.x-dev",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/promptphp/intercept.git",
-                "reference": "a7d126dff01c8efde6db2dc0e006c93e9995b523"
+                "reference": "3deb326e9f7eee3eab4336dded363d1b757a63c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/promptphp/intercept/zipball/a7d126dff01c8efde6db2dc0e006c93e9995b523",
-                "reference": "a7d126dff01c8efde6db2dc0e006c93e9995b523",
+                "url": "https://api.github.com/repos/promptphp/intercept/zipball/3deb326e9f7eee3eab4336dded363d1b757a63c0",
+                "reference": "3deb326e9f7eee3eab4336dded363d1b757a63c0",
                 "shasum": ""
             },
             "require": {
@@ -2787,7 +2787,7 @@
             ],
             "support": {
                 "issues": "https://github.com/promptphp/intercept/issues",
-                "source": "https://github.com/promptphp/intercept/tree/v1.0"
+                "source": "https://github.com/promptphp/intercept/tree/v1.0.0"
             },
             "funding": [
                 {
@@ -2799,7 +2799,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-26T23:40:25+00:00"
+            "time": "2026-09-27T00:40:35+00:00"
         },
         {
             "name": "psr/clock",
@@ -10158,9 +10158,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "promptphp/intercept": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
