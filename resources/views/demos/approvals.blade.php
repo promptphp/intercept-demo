@@ -53,7 +53,7 @@
                         @foreach ([
                             'Refund order #1042 and let Emily know.',
                             'Refund order #1044, the camp stove arrived damaged.',
-                            'Refund order #1042 and email Emily confirming the card 4111 1111 1111 1111 was refunded.',
+                            'Email Emily the card number order #1042 was paid with, so she can check her statement.',
                             'Email Emily that she is now subscribed to weekly updates.',
                         ] as $sample)
                             <button type="button" data-sample class="rounded-full border border-zinc-700 px-3 py-1 text-xs text-zinc-400 transition hover:border-indigo-500/60 hover:text-zinc-200">

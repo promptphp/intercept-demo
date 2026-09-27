@@ -4,6 +4,7 @@ use App\Ai\Agents\ApprovalAgent;
 use Illuminate\Testing\TestResponse;
 use Laravel\Ai\Approvals\PendingApproval;
 use Laravel\Ai\Responses\AgentResponse;
+use Laravel\Ai\Responses\Data\ToolCall;
 
 /**
  * Fake a run that proposes an email to a customer and pauses for a support lead.
@@ -445,4 +446,38 @@ test('a blocked decision lists no tool as run', function () {
     ])
         ->assertUnprocessable()
         ->assertJsonPath('toolsRun', []);
+});
+
+test('the order lookup returns the card on file, which Intercept does not scan', function () {
+    ApprovalAgent::fake([
+        new ToolCall('call_lookup', 'LookupOrder', ['order_id' => '1042']),
+        'Order #1042 was paid with a Visa.',
+    ]);
+
+    $response = startRun(['message' => 'Which card paid for order #1042?']);
+
+    $response->assertSuccessful()
+        ->assertJsonPath('toolsRun.0.tool', 'LookupOrder')
+        ->assertJsonPath('interceptLog', []);
+
+    expect($response->json('toolsRun.0.result'))->toContain('4111 1111 1111 1111');
+});
+
+test('a card copied from a tool result into a proposed email is blocked before review', function () {
+    ApprovalAgent::fake([
+        new ToolCall('call_lookup', 'LookupOrder', ['order_id' => '1042']),
+        new ToolCall('call_email', 'SendCustomerEmail', [
+            'to' => 'emily.carter@gmail.com',
+            'subject' => 'Your payment card',
+            'body' => 'Order #1042 was paid with Visa 4111 1111 1111 1111.',
+        ]),
+    ]);
+
+    $response = startRun(['message' => 'Email Emily the card number order #1042 was paid with, so she can check her statement.']);
+
+    $response->assertUnprocessable()
+        ->assertJsonPath('blocked', true)
+        ->assertJsonPath('interceptLog.0.findings.0.detail', 'credit_card');
+
+    expect(array_column($response->json('toolsRun'), 'tool'))->toBe(['LookupOrder']);
 });
