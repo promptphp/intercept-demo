@@ -24,7 +24,7 @@ class LogDebuggerController extends Controller
         } catch (PIIRedactorException) {
             return response()->json([
                 'blocked' => true,
-                'reason' => 'The log contains a secret (API key or bearer token) and was blocked before leaving your server.',
+                'reason' => 'This log contains a secret (an API key or bearer token). It never left your server.',
             ], 422);
         }
 

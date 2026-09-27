@@ -49,14 +49,14 @@ class ApprovalDeskController extends Controller
             );
         } catch (PromptInjectionGuardException) {
             return $this->blocked(
-                'Your request contains a prompt injection. It was stopped before it reached the provider.',
+                'Your request contains a prompt injection. It never reached the provider.',
                 'Prompt injection attempt detected.',
                 $recorder,
                 stillAwaitingApproval: false,
             );
         } catch (PIIRedactorException) {
             return $this->blocked(
-                'Your request carries high-risk data (a card number or a secret). It was stopped before it reached the provider.',
+                'Your request carries a card number or a secret. It never reached the provider.',
                 'PII detected in agent prompt.',
                 $recorder,
                 stillAwaitingApproval: false,
@@ -89,13 +89,13 @@ class ApprovalDeskController extends Controller
             );
         } catch (PromptInjectionGuardException $e) {
             return $this->blocked(
-                'Something you typed contains a prompt injection. The run was stopped before the tool ran or the provider saw it.',
+                'What you typed contains a prompt injection. The run stopped before the tool ran.',
                 $e->getMessage(),
                 $recorder,
             );
         } catch (PIIRedactorException) {
             return $this->blocked(
-                'Something you typed carries high-risk data (a card number or a secret). The run was stopped before the tool ran or the provider saw it.',
+                'What you typed carries a card number or a secret. The run stopped before the tool ran.',
                 'PII detected in tool approval decisions.',
                 $recorder,
             );

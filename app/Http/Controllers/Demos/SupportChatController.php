@@ -25,12 +25,12 @@ class SupportChatController extends Controller
         } catch (PromptInjectionGuardException) {
             return response()->json([
                 'blocked' => true,
-                'reason' => 'Prompt injection detected — the message was blocked before reaching the AI provider.',
+                'reason' => 'Prompt injection detected. The message never reached the AI provider.',
             ], 422);
         } catch (PIIRedactorException) {
             return response()->json([
                 'blocked' => true,
-                'reason' => 'The message contains high-risk sensitive data (credit card or secret) and was blocked.',
+                'reason' => 'Card numbers and secrets are never sent. The message was blocked.',
             ], 422);
         }
 

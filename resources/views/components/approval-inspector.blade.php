@@ -1,50 +1,45 @@
-<section data-approval-inspector {{ $attributes->merge(['class' => 'overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/50']) }}>
-    <header class="flex items-center justify-between gap-4 border-b border-zinc-800 px-5 py-4">
+@php
+    $panels = [
+        [
+            'title' => 'What the model proposed',
+            'note' => 'Checked before it reaches you. By default only card numbers, API keys and bearer tokens count as a leak.',
+            'hook' => 'data-proposal-findings',
+            'tone' => 'text-muted',
+        ],
+        [
+            'title' => 'What the support lead typed',
+            'note' => 'Scanned before the tool runs. Intercept never rewrites a decision, so redact only logs.',
+            'hook' => 'data-decision-segments',
+            'tone' => 'text-good',
+        ],
+        [
+            'title' => 'Tools that ran',
+            'note' => 'Everything the SDK executed this turn. A blocked turn runs nothing.',
+            'hook' => 'data-tools-run',
+            'tone' => 'text-muted',
+        ],
+    ];
+@endphp
+
+<section data-approval-inspector {{ $attributes->class('rounded-xl bg-panel ring-1 ring-line') }}>
+    <div class="flex items-center justify-between gap-4 border-b border-line px-5 py-3.5">
         <div>
-            <h2 class="text-sm font-semibold tracking-wide text-zinc-200 uppercase">Approval inspector</h2>
-            <p class="text-xs text-zinc-500">Both ends of one pause</p>
+            <h2 class="text-sm font-medium text-fg-2">Approval inspector</h2>
+            <p class="text-xs text-subtle">Both ends of one pause</p>
         </div>
-        <span data-approval-status class="rounded-full bg-zinc-800 px-2.5 py-1 text-xs font-medium text-zinc-400">waiting</span>
-    </header>
-    <div class="grid grid-cols-1 divide-y divide-zinc-800">
-        <div class="p-5">
-            <h3 class="mb-2 flex items-center gap-2 text-xs font-semibold tracking-wide text-zinc-500 uppercase">
-                <span class="rounded bg-indigo-500/15 px-1.5 py-0.5 font-mono text-[10px] text-indigo-400">1</span>
-                What the model proposed
-            </h3>
-            <p class="mb-2 text-xs leading-relaxed text-zinc-600">
-                <span class="font-mono text-zinc-500">ToolApprovalGuard</span> inspects each step's proposed call
-                before it is surfaced for review. It acts on the model's response, because tool results reach the
-                model unscanned and can shape what it proposes. It scans for three things by default:
-                <span class="font-mono text-zinc-500">credit_card</span>,
-                <span class="font-mono text-zinc-500">api_key</span>,
-                <span class="font-mono text-zinc-500">bearer_token</span>. An email address in
-                <span class="font-mono text-zinc-500">to:</span> is the tool's parameter, not a leak.
-            </p>
-            <pre data-proposal-findings class="max-h-56 overflow-auto rounded-lg bg-zinc-950/80 p-4 font-mono text-xs leading-relaxed whitespace-pre-wrap text-zinc-400">—</pre>
-        </div>
-        <div class="p-5">
-            <h3 class="mb-2 flex items-center gap-2 text-xs font-semibold tracking-wide text-zinc-500 uppercase">
-                <span class="rounded bg-indigo-500/15 px-1.5 py-0.5 font-mono text-[10px] text-indigo-400">2</span>
-                What the support lead typed
-            </h3>
-            <p class="mb-2 text-xs leading-relaxed text-zinc-600">
-                A resumed run carries no prompt text. These segments are the only new content. Intercept scans
-                them before the SDK applies them, so a block stops the tool before it runs. Decisions can not be
-                rewritten, so <span class="font-mono text-zinc-500">redact</span> degrades to logging.
-            </p>
-            <pre data-decision-segments class="max-h-56 overflow-auto rounded-lg bg-zinc-950/80 p-4 font-mono text-xs leading-relaxed whitespace-pre-wrap text-emerald-300/90">—</pre>
-        </div>
-        <div class="p-5">
-            <h3 class="mb-2 flex items-center gap-2 text-xs font-semibold tracking-wide text-zinc-500 uppercase">
-                <span class="rounded bg-indigo-500/15 px-1.5 py-0.5 font-mono text-[10px] text-indigo-400">3</span>
-                Tools that ran
-            </h3>
-            <p class="mb-2 text-xs leading-relaxed text-zinc-600">
-                Every tool the SDK executed on this turn. A blocked turn lists nothing, because Intercept stops
-                the run before the tool call executes.
-            </p>
-            <pre data-tools-run class="max-h-56 overflow-auto rounded-lg bg-zinc-950/80 p-4 font-mono text-xs leading-relaxed whitespace-pre-wrap text-zinc-400">—</pre>
-        </div>
+        <span data-approval-status class="rounded-full bg-tint px-2 py-0.5 text-xs font-medium text-muted ring-1 ring-edge ring-inset">waiting</span>
     </div>
+
+    <ol class="flex flex-col gap-6 p-5">
+        @foreach ($panels as $index => $panel)
+            <li>
+                <h3 class="flex items-baseline gap-2 text-sm font-medium text-fg-2">
+                    <span class="font-mono text-xs text-faint">{{ $index + 1 }}</span>
+                    {{ $panel['title'] }}
+                </h3>
+                <p class="mt-1 mb-2.5 text-xs leading-relaxed text-subtle">{{ $panel['note'] }}</p>
+                <pre {{ $panel['hook'] }} @class(['max-h-56 overflow-auto rounded-lg bg-inset p-3.5 font-mono text-xs leading-relaxed whitespace-pre-wrap', $panel['tone']])>Nothing yet.</pre>
+            </li>
+        @endforeach
+    </ol>
 </section>

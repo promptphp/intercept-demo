@@ -6,4 +6,106 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+    --text-xs: 0.8125rem;
+    --text-xs--line-height: 1.25rem;
+    --text-sm: 0.9375rem;
+    --text-sm--line-height: 1.5rem;
+}
+
+/*
+ * Semantic colors. Every UI color comes from these tokens, so light and dark mode differ
+ * only in the values below. The page follows the system setting until the visitor picks
+ * a theme, and the `dark` class on <html> selects the dark values.
+ */
+@theme inline {
+    --color-canvas: var(--canvas);
+    --color-panel: var(--panel);
+    --color-panel-hover: var(--panel-hover);
+    --color-inset: var(--inset);
+    --color-field: var(--field);
+    --color-line: var(--line);
+    --color-edge: var(--edge);
+    --color-edge-strong: var(--edge-strong);
+    --color-tint: var(--tint);
+    --color-tint-strong: var(--tint-strong);
+    --color-tint-hover: var(--tint-hover);
+    --color-fg: var(--fg);
+    --color-fg-2: var(--fg-2);
+    --color-muted: var(--muted);
+    --color-subtle: var(--subtle);
+    --color-faint: var(--faint);
+    --color-accent: var(--accent);
+    --color-accent-hover: var(--accent-hover);
+    --color-on-accent: var(--on-accent);
+    --color-focus: var(--focus);
+    --color-good: var(--good);
+    --color-warn: var(--warn);
+    --color-info: var(--info);
+    --color-bad: var(--bad);
+    --color-bad-strong: var(--bad-strong);
+    --color-bad-soft: var(--bad-soft);
+}
+
+:root {
+    color-scheme: light;
+
+    --canvas: var(--color-zinc-50);
+    --panel: var(--color-white);
+    --panel-hover: var(--color-zinc-100);
+    --inset: var(--color-zinc-100);
+    --field: var(--color-white);
+    --line: rgb(0 0 0 / 0.07);
+    --edge: rgb(0 0 0 / 0.12);
+    --edge-strong: rgb(0 0 0 / 0.2);
+    --tint: rgb(0 0 0 / 0.04);
+    --tint-strong: rgb(0 0 0 / 0.07);
+    --tint-hover: rgb(0 0 0 / 0.1);
+    --fg: var(--color-zinc-900);
+    --fg-2: var(--color-zinc-700);
+    --muted: var(--color-zinc-600);
+    --subtle: var(--color-zinc-500);
+    --faint: var(--color-zinc-400);
+    --accent: var(--color-zinc-900);
+    --accent-hover: var(--color-zinc-700);
+    --on-accent: var(--color-zinc-50);
+    --focus: var(--color-zinc-400);
+    --good: var(--color-emerald-700);
+    --warn: var(--color-amber-700);
+    --info: var(--color-sky-700);
+    --bad: var(--color-red-700);
+    --bad-strong: var(--color-red-600);
+    --bad-soft: var(--color-red-800);
+}
+
+:root.dark {
+    color-scheme: dark;
+
+    --canvas: var(--color-zinc-950);
+    --panel: rgb(24 24 27 / 0.6);
+    --panel-hover: var(--color-zinc-900);
+    --inset: rgb(0 0 0 / 0.4);
+    --field: var(--color-zinc-950);
+    --line: rgb(255 255 255 / 0.05);
+    --edge: rgb(255 255 255 / 0.1);
+    --edge-strong: rgb(255 255 255 / 0.15);
+    --tint: rgb(255 255 255 / 0.05);
+    --tint-strong: rgb(255 255 255 / 0.1);
+    --tint-hover: rgb(255 255 255 / 0.15);
+    --fg: var(--color-zinc-100);
+    --fg-2: var(--color-zinc-200);
+    --muted: var(--color-zinc-400);
+    --subtle: var(--color-zinc-500);
+    --faint: var(--color-zinc-600);
+    --accent: var(--color-zinc-100);
+    --accent-hover: var(--color-white);
+    --on-accent: var(--color-zinc-900);
+    --focus: var(--color-zinc-400);
+    --good: var(--color-emerald-300);
+    --warn: var(--color-amber-300);
+    --info: var(--color-sky-300);
+    --bad: var(--color-red-300);
+    --bad-strong: var(--color-red-400);
+    --bad-soft: var(--color-red-200);
 }

@@ -1,50 +1,43 @@
 <x-layouts.demo title="Log Debugger">
     <div class="mx-auto max-w-6xl">
-        <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
-            <div>
-                <h1 class="text-2xl font-bold tracking-tight">Demo 3 — Log Debugger</h1>
-                <p class="mt-1 text-sm text-zinc-400">Paste a production log. PII is masked so you can still correlate values — leaked secrets block the request entirely.</p>
-            </div>
-            <div class="flex flex-wrap gap-1.5">
-                <span class="rounded-md bg-amber-500/10 px-2 py-1 font-mono text-[11px] text-amber-400">PIIRedactor(action: 'mask')</span>
-                <span class="rounded-md bg-red-500/10 px-2 py-1 font-mono text-[11px] text-red-400">blockEntities: ['api_key', 'bearer_token']</span>
-            </div>
-        </div>
+        <x-demo-header number="3" title="Log Debugger">
+            Paste a production log. PII is masked so you can still correlate values. A leaked secret stops the request.
 
-        <div class="grid grid-cols-1 items-start gap-6 xl:grid-cols-2">
-            <div class="flex flex-col gap-6">
-                <section class="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
-                    <div class="mb-3 flex flex-wrap gap-1.5">
-                        <button type="button" data-load-sample="pii" class="rounded-full border border-zinc-700 px-3 py-1 text-xs text-zinc-400 transition hover:border-indigo-500/60 hover:text-zinc-200">
-                            Sample: query bug with customer PII
-                        </button>
-                        <button type="button" data-load-sample="token" class="rounded-full border border-zinc-700 px-3 py-1 text-xs text-zinc-400 transition hover:border-indigo-500/60 hover:text-zinc-200">
-                            Sample: 401 with leaked bearer token
-                        </button>
-                        <button type="button" data-load-sample="clean" class="rounded-full border border-zinc-700 px-3 py-1 text-xs text-zinc-400 transition hover:border-indigo-500/60 hover:text-zinc-200">
-                            Sample: clean stack trace
-                        </button>
-                    </div>
-                    <form data-log-form class="flex flex-col gap-3">
+            <x-slot:aside>
+                <x-policy>PIIRedactor(action: 'mask')</x-policy>
+                <x-policy>blockEntities: ['api_key', 'bearer_token']</x-policy>
+            </x-slot:aside>
+        </x-demo-header>
+
+        <div class="grid grid-cols-1 items-start gap-5 xl:grid-cols-2">
+            <div class="flex flex-col gap-5">
+                <x-panel title="Log">
+                    <form data-log-form class="flex flex-col gap-3 p-4">
+                        <div class="flex flex-wrap items-center gap-1.5">
+                            <span class="mr-1 text-xs text-subtle">Load</span>
+                            @foreach (['pii' => 'Query bug with customer PII', 'token' => '401 with a leaked bearer token', 'clean' => 'Clean stack trace'] as $key => $label)
+                                <button type="button" data-load-sample="{{ $key }}"
+                                    class="rounded-full bg-tint px-3 py-1 text-xs text-muted ring-1 ring-edge ring-inset transition hover:bg-tint-strong hover:text-fg-2">{{ $label }}</button>
+                            @endforeach
+                        </div>
+
                         <textarea name="log" required maxlength="20000" rows="12" spellcheck="false"
-                            placeholder="Paste a log excerpt or stack trace…"
-                            class="w-full resize-y rounded-lg border border-zinc-700 bg-zinc-950 p-4 font-mono text-xs leading-relaxed placeholder-zinc-600 focus:border-indigo-500 focus:outline-none"></textarea>
-                        <button type="submit" data-analyze
-                            class="self-end rounded-lg bg-indigo-500 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-50">
-                            Analyze log
+                            placeholder="Paste a log excerpt or stack trace"
+                            class="w-full resize-y rounded-lg bg-field p-3.5 font-mono text-xs leading-relaxed text-fg-2 ring-1 ring-edge ring-inset placeholder:text-faint focus:ring-2 focus:ring-focus focus:outline-none"></textarea>
+
+                        <button type="submit" data-analyze disabled
+                            class="inline-flex items-center gap-2 self-end rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-on-accent transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40">
+                            Analyze
                         </button>
                     </form>
-                </section>
+                </x-panel>
 
-                <section data-analysis-panel class="hidden rounded-xl border border-zinc-800 bg-zinc-900/50">
-                    <header class="border-b border-zinc-800 px-5 py-4">
-                        <h2 class="text-sm font-semibold tracking-wide text-zinc-200 uppercase">Analysis</h2>
-                    </header>
-                    <pre data-analysis class="max-h-96 overflow-auto p-5 text-sm leading-relaxed whitespace-pre-wrap text-zinc-300"></pre>
-                </section>
+                <x-panel title="Analysis" data-analysis-panel class="hidden">
+                    <pre data-analysis class="max-h-96 overflow-auto p-5 text-sm leading-relaxed whitespace-pre-wrap text-fg-2"></pre>
+                </x-panel>
             </div>
 
-            <x-prompt-inspector class="sticky top-6" />
+            <x-prompt-inspector class="xl:sticky xl:top-8" />
         </div>
     </div>
 
@@ -70,10 +63,19 @@ Request headers: {"Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e
         const analyzeButton = form.querySelector('[data-analyze]');
         const analysisPanel = document.querySelector('[data-analysis-panel]');
         const analysis = document.querySelector('[data-analysis]');
+        const submit = window.demo.requireInput(textarea, analyzeButton);
+
+        const show = (text, blocked = false) => {
+            analysis.textContent = text;
+            analysis.classList.toggle('text-bad-soft', blocked);
+            analysis.classList.toggle('text-fg-2', !blocked);
+            analysisPanel.classList.remove('hidden');
+        };
 
         document.querySelectorAll('[data-load-sample]').forEach((button) => {
             button.addEventListener('click', () => {
                 textarea.value = samples[button.dataset.loadSample];
+                submit.sync();
                 textarea.focus();
             });
         });
@@ -84,31 +86,27 @@ Request headers: {"Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e
             const log = textarea.value.trim();
             if (!log) return;
 
-            analyzeButton.disabled = true;
-            analyzeButton.textContent = 'Analyzing…';
+            submit.busy(true);
+            const stopLoading = window.demo.loading(analyzeButton, 'Analyzing');
             analysisPanel.classList.add('hidden');
 
             try {
                 const { status, body } = await window.demo.post('{{ route('demos.debugger.store') }}', { log });
 
                 if (status === 422 && body.blocked) {
-                    analysis.textContent = `🛡️ ${body.reason}`;
-                    analysisPanel.classList.remove('hidden');
+                    show(`Blocked. ${body.reason}`, true);
                     window.demo.inspect({ original: log, blocked: true });
                 } else if (status === 200) {
-                    analysis.textContent = body.reply;
-                    analysisPanel.classList.remove('hidden');
+                    show(body.reply);
                     window.demo.inspect({ original: log, sent: body.sentPrompt });
                 } else {
-                    analysis.textContent = `Something went wrong (${status}).`;
-                    analysisPanel.classList.remove('hidden');
+                    show(`Something went wrong (${status}).`, true);
                 }
             } catch (error) {
-                analysis.textContent = 'Request failed. Is your AI provider key configured?';
-                analysisPanel.classList.remove('hidden');
+                show('Request failed. Is your AI provider key set?', true);
             } finally {
-                analyzeButton.disabled = false;
-                analyzeButton.textContent = 'Analyze log';
+                stopLoading('Analyze');
+                submit.busy(false);
             }
         });
     </script>
