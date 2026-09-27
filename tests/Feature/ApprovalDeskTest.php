@@ -76,7 +76,8 @@ test('the approval desk page renders', function () {
         ->assertSee('What the support lead typed')
         ->assertSee('Guard proposals')
         ->assertSee('Widen to all 8 entities')
-        ->assertSee('Scan decisions');
+        ->assertSee('Scan decisions')
+        ->assertSee('Tools that ran');
 });
 
 test('a run pauses and surfaces the tool call the model proposed', function () {
@@ -403,7 +404,8 @@ test('a card number in the operator request is blocked instead of failing', func
     startRun(['message' => 'Refund the card 4111 1111 1111 1111 for order #1042.'])
         ->assertUnprocessable()
         ->assertJsonPath('blocked', true)
-        ->assertJsonPath('stillAwaitingApproval', false);
+        ->assertJsonPath('stillAwaitingApproval', false)
+        ->assertJsonPath('toolsRun', []);
 });
 
 test('an injection in the operator request is blocked instead of failing', function () {
@@ -413,4 +415,34 @@ test('an injection in the operator request is blocked instead of failing', funct
         ->assertUnprocessable()
         ->assertJsonPath('blocked', true)
         ->assertJsonPath('stillAwaitingApproval', false);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Tools that ran
+|--------------------------------------------------------------------------
+|
+| The desk lists every tool the SDK executed on a turn. That list is the evidence that a
+| blocked turn ran nothing.
+|
+*/
+
+test('a blocked decision lists no tool as run', function () {
+    $conversationId = pauseRun();
+
+    $this->postJson(route('demos.approvals.resume'), [
+        'conversationId' => $conversationId,
+        'decisions' => [
+            'call_abc' => [
+                'action' => 'edit',
+                'arguments' => [
+                    'to' => 'emily.carter@gmail.com',
+                    'subject' => 'Your refund for order #1042',
+                    'body' => 'Refunding the card 4242 4242 4242 4242 you paid with.',
+                ],
+            ],
+        ],
+    ])
+        ->assertUnprocessable()
+        ->assertJsonPath('toolsRun', []);
 });

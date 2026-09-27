@@ -199,6 +199,7 @@
                     blocked: true,
                     detail: body.detail,
                     interceptLog: body.interceptLog ?? [],
+                    toolsRun: body.toolsRun ?? [],
                 });
 
                 return false;
@@ -215,6 +216,7 @@
             window.demo.inspectApproval({
                 scanned: body.scanned,
                 interceptLog: body.interceptLog,
+                toolsRun: body.toolsRun ?? [],
             });
 
             if (body.reply) {

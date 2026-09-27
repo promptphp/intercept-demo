@@ -35,5 +35,16 @@
             </p>
             <pre data-decision-segments class="max-h-56 overflow-auto rounded-lg bg-zinc-950/80 p-4 font-mono text-xs leading-relaxed whitespace-pre-wrap text-emerald-300/90">—</pre>
         </div>
+        <div class="p-5">
+            <h3 class="mb-2 flex items-center gap-2 text-xs font-semibold tracking-wide text-zinc-500 uppercase">
+                <span class="rounded bg-indigo-500/15 px-1.5 py-0.5 font-mono text-[10px] text-indigo-400">3</span>
+                Tools that ran
+            </h3>
+            <p class="mb-2 text-xs leading-relaxed text-zinc-600">
+                Every tool the SDK executed on this turn. A blocked turn lists nothing, because Intercept stops
+                the run before the tool call executes.
+            </p>
+            <pre data-tools-run class="max-h-56 overflow-auto rounded-lg bg-zinc-950/80 p-4 font-mono text-xs leading-relaxed whitespace-pre-wrap text-zinc-400">—</pre>
+        </div>
     </div>
 </section>

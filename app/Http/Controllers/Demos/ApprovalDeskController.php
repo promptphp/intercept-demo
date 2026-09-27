@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Demos;
 
 use App\Ai\Support\InterceptLogRecorder;
 use App\Ai\Support\PromptInspector;
+use App\Ai\Support\ToolActivityRecorder;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Demos\ResolveApprovalsRequest;
 use App\Http\Requests\Demos\StartApprovalRunRequest;
@@ -131,6 +132,7 @@ class ApprovalDeskController extends Controller
                 : [],
             'scanned' => $inspector->decisionSegments,
             'interceptLog' => $recorder->records,
+            'toolsRun' => resolve(ToolActivityRecorder::class)->runs,
         ];
     }
 
@@ -148,6 +150,7 @@ class ApprovalDeskController extends Controller
             'detail' => $detail,
             'stillAwaitingApproval' => $stillAwaitingApproval,
             'interceptLog' => $recorder->records,
+            'toolsRun' => resolve(ToolActivityRecorder::class)->runs,
         ], 422);
     }
 

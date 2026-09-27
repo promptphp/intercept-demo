@@ -47,7 +47,7 @@ window.demo = {
         badge.textContent = labels[state];
     },
 
-    inspectApproval({ scanned = [], interceptLog = [], blocked = false, detail = null } = {}) {
+    inspectApproval({ scanned = [], interceptLog = [], toolsRun = [], blocked = false, detail = null } = {}) {
         const root = document.querySelector('[data-approval-inspector]');
 
         if (!root) {
@@ -106,6 +106,11 @@ window.demo = {
         } else {
             segments.textContent = segmentLines;
         }
+
+        // Panel 3: the tools the SDK actually executed on this turn.
+        root.querySelector('[data-tools-run]').textContent = toolsRun.length
+            ? toolsRun.map((run) => `${run.tool}\n${run.result}`).join('\n\n')
+            : (blocked ? 'No tool ran. The run stopped before execution.' : 'No tool ran on this turn.');
 
         const state = blocked
             ? 'blocked'
