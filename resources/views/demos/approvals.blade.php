@@ -32,10 +32,10 @@
                 <div class="border-t border-zinc-800 p-4">
                     <div class="mb-3 grid grid-cols-1 gap-x-4 gap-y-2 rounded-lg border border-zinc-800 bg-zinc-950/50 p-3 sm:grid-cols-2">
                         @foreach ([
-                            ['key' => 'guardProposals', 'label' => 'Guard proposals', 'hint' => 'off = before v0.3.0', 'checked' => true],
-                            ['key' => 'scanDecisions', 'label' => 'Scan decisions', 'hint' => 'off = before v0.2.0', 'checked' => true],
-                            ['key' => 'scanAllEntities', 'label' => 'Widen to all 8 entities', 'hint' => 'v0.3.0 shipped this — watch it misfire', 'checked' => false],
-                            ['key' => 'scanInjection', 'label' => 'Scan proposals for injection', 'hint' => 'v0.3.0 shipped this on — flags plain prose', 'checked' => false],
+                            ['key' => 'guardProposals', 'label' => 'Guard proposals', 'hint' => 'inspect each proposed call before you see it', 'checked' => true],
+                            ['key' => 'scanDecisions', 'label' => 'Scan decisions', 'hint' => 'scan what you type, before the tool runs', 'checked' => true],
+                            ['key' => 'scanAllEntities', 'label' => 'Widen to all 8 entities', 'hint' => 'opt-in: flags the tool\'s own to: address', 'checked' => false],
+                            ['key' => 'scanInjection', 'label' => 'Scan proposals for injection', 'hint' => 'opt-in: flags plain prose', 'checked' => false],
                             ['key' => 'denyEmailTool', 'label' => 'Deny SendCustomerEmail', 'hint' => 'an ops kill-switch', 'checked' => false],
                         ] as $toggle)
                             <label class="flex items-start gap-2.5 text-xs text-zinc-400">
@@ -152,7 +152,7 @@
                             class="rounded-full border border-zinc-700 px-2.5 py-1 text-[11px] text-zinc-400 transition hover:border-red-500/60 hover:text-red-300">
                             card number
                         </button>
-                        <button type="button" data-preset="Sorted — your refund is on its way. Sorry for the hassle!"
+                        <button type="button" data-preset="Sorted, your refund is on its way. Sorry for the hassle!"
                             class="rounded-full border border-zinc-700 px-2.5 py-1 text-[11px] text-zinc-400 transition hover:border-emerald-500/60 hover:text-emerald-300">
                             clean edit
                         </button>

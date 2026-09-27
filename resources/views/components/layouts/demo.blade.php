@@ -40,7 +40,7 @@
             </nav>
 
             <div class="mt-auto rounded-lg border border-zinc-800 bg-zinc-900 p-4 text-xs leading-relaxed text-zinc-500">
-                Every prompt passes through <span class="text-zinc-300">promptphp/intercept</span> middleware before it reaches the AI provider.
+                Every generation step passes through <span class="text-zinc-300">promptphp/intercept</span> middleware before it reaches the AI provider.
             </div>
         </aside>
 

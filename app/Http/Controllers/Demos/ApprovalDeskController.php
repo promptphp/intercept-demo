@@ -69,9 +69,10 @@ class ApprovalDeskController extends Controller
     /**
      * Resume a paused run with the decisions a human made on the approval desk.
      *
-     * Edited arguments and rejection notes are the only new content on this path, and
-     * they reach the provider without ever having been part of a prompt. That is the
-     * gap `scanApprovalDecisions` closes, so a blocked resume is the whole point here.
+     * Edited arguments and rejection notes are the only new content on this path. The SDK
+     * applies them before the first step, so an approved or edited tool call runs before any
+     * step middleware sees it. Intercept scans the decisions first, so a blocked resume runs
+     * no tool and sends nothing to the provider.
      */
     public function resume(ResolveApprovalsRequest $request, PromptInspector $inspector, InterceptLogRecorder $recorder): JsonResponse
     {
@@ -88,7 +89,7 @@ class ApprovalDeskController extends Controller
             );
         } catch (PromptInjectionGuardException $e) {
             return $this->blocked(
-                'A tool argument you edited contains a prompt injection. The run was stopped before the tool ran or the provider saw it.',
+                'Something you typed contains a prompt injection. The run was stopped before the tool ran or the provider saw it.',
                 $e->getMessage(),
                 $recorder,
             );

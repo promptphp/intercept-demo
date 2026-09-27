@@ -34,7 +34,7 @@ class ApprovalAgent implements Agent, Conversational, HasMiddleware, HasTools
     protected const SECRET_ENTITIES = ['credit_card', 'api_key', 'bearer_token'];
 
     /**
-     * Every entity the redactor can detect, which is what the guard used to default to.
+     * Every entity the redactor can detect. The widen toggle uses it to show why the default is narrow.
      *
      * @var array<int, string>
      */
@@ -49,10 +49,10 @@ class ApprovalAgent implements Agent, Conversational, HasMiddleware, HasTools
      * Every flag here exists so the demo page can toggle one guarantee at a time. Real agents
      * hard-code their policy; none of this is a pattern to copy.
      *
-     * @param  bool  $scanApprovalDecisions  Whether Intercept scans what the support lead typed.
-     *                                       Off is what every release before v0.2.0 did.
-     * @param  bool  $guardProposals  Whether Intercept inspects what the model proposed.
-     *                                Off is what every release before v0.3.0 did.
+     * @param  bool  $scanApprovalDecisions  Whether Intercept scans what the support lead typed,
+     *                                       before the SDK runs the approved tool call.
+     * @param  bool  $guardProposals  Whether Intercept inspects what the model proposed,
+     *                                before the proposal reaches the review screen.
      * @param  bool  $scanAllEntities  Whether to widen the guard past its narrow default to every
      *                                 detectable entity, which shows why the default is narrow.
      * @param  bool  $scanInjection  Whether to scan proposed arguments for injection patterns.
@@ -107,15 +107,18 @@ class ApprovalAgent implements Agent, Conversational, HasMiddleware, HasTools
      *
      * This agent guards both ends of one human-in-the-loop pause.
      *
-     * `ToolApprovalGuard` is the only middleware here that acts on the response, because the tool
-     * calls it inspects are proposed by the model. It runs before a proposal is ever surfaced for
-     * review, which is the first point downstream of the tool results and retrieved documents the
-     * pipeline never sees.
+     * The SDK runs this middleware on every generation step.
      *
-     * The other two act on the prompt. A resumed run carries no prompt text, so what they scan on
-     * that path is whatever the support lead typed while resolving the pause: edited tool arguments
-     * and rejection notes. Resumed prompts cannot be rewritten, so `redact` degrades to logging
-     * there, while blocked entities and the injection guard's `block` still stop the run.
+     * `ToolApprovalGuard` is the only middleware here that acts on the step response, because the
+     * tool calls it inspects are proposed by the model. It runs before a proposal is ever surfaced
+     * for review. Intercept does not scan tool results, such as the card on file that `LookupOrder`
+     * returns, so this is the first point where a leak from them can be caught.
+     *
+     * The other two act on the prompt and on every user message in the history. On a resumed run
+     * they scan what the support lead typed: edited tool arguments and rejection notes. Intercept
+     * scans those before the SDK applies them, so a block stops the tool before it runs. Decisions
+     * can not be rewritten, so `redact` degrades to logging there, while blocked entities and the
+     * injection guard's `block` still stop the run.
      */
     public function middleware(): array
     {

@@ -78,7 +78,8 @@ test('the approval desk page renders', function () {
         ->assertSee('Guard proposals')
         ->assertSee('Widen to all 8 entities')
         ->assertSee('Scan decisions')
-        ->assertSee('Tools that ran');
+        ->assertSee('Tools that ran')
+        ->assertDontSee('v0.');
 });
 
 test('a run pauses and surfaces the tool call the model proposed', function () {

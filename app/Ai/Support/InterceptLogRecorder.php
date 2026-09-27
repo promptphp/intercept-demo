@@ -7,16 +7,16 @@ use Illuminate\Log\Events\MessageLogged;
 /**
  * Captures what the Intercept middleware wrote to the log during the current request.
  *
- * Some middleware outcomes are invisible in the prompt itself. A resumed run cannot be
- * rewritten, so `redact` and `mask` degrade to logging rather than changing anything the
- * inspector could show, and a blocked proposal never becomes a prompt at all. The log entry
+ * Some middleware outcomes are invisible in the prompt itself. Approval decisions can not
+ * be rewritten, so `redact` and `mask` degrade to logging rather than changing anything the
+ * inspector could show, and a blocked proposal never reaches the review screen. The log entry
  * is the only evidence the scan happened, so the approval desk surfaces it directly.
  *
  * Both tool approval paths tag their context with a `source`, which is a far steadier hook
  * than matching on the log message:
  *
- * - `pending_approvals` — ToolApprovalGuard, on what the model proposed.
- * - `approval_decisions` — InjectionGuard and PIIRedactor, on what the human typed back.
+ * - `pending_approvals`: ToolApprovalGuard, on what the model proposed.
+ * - `approval_decisions`: InjectionGuard and PIIRedactor, on what the human typed back.
  */
 class InterceptLogRecorder
 {

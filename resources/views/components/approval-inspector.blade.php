@@ -13,9 +13,9 @@
                 What the model proposed
             </h3>
             <p class="mb-2 text-xs leading-relaxed text-zinc-600">
-                <span class="font-mono text-zinc-500">ToolApprovalGuard</span> inspects the proposed call before
-                it is surfaced for review. It acts on the response, because this content came from the model —
-                shaped by tool results the pipeline never sees. It scans for three things by default:
+                <span class="font-mono text-zinc-500">ToolApprovalGuard</span> inspects each step's proposed call
+                before it is surfaced for review. It acts on the model's response, because tool results reach the
+                model unscanned and can shape what it proposes. It scans for three things by default:
                 <span class="font-mono text-zinc-500">credit_card</span>,
                 <span class="font-mono text-zinc-500">api_key</span>,
                 <span class="font-mono text-zinc-500">bearer_token</span>. An email address in
@@ -29,9 +29,9 @@
                 What the support lead typed
             </h3>
             <p class="mb-2 text-xs leading-relaxed text-zinc-600">
-                A resumed run carries no prompt text. These segments are the only new content, and a resumed
-                prompt cannot be rewritten — so <span class="font-mono text-zinc-500">redact</span> has nowhere
-                to write and degrades to logging.
+                A resumed run carries no prompt text. These segments are the only new content. Intercept scans
+                them before the SDK applies them, so a block stops the tool before it runs. Decisions can not be
+                rewritten, so <span class="font-mono text-zinc-500">redact</span> degrades to logging.
             </p>
             <pre data-decision-segments class="max-h-56 overflow-auto rounded-lg bg-zinc-950/80 p-4 font-mono text-xs leading-relaxed whitespace-pre-wrap text-emerald-300/90">—</pre>
         </div>

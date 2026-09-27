@@ -95,7 +95,7 @@ window.demo = {
                     record.message,
                     describeEntities(record),
                     record.degradedFrom
-                        ? `degraded_from: ${record.degradedFrom}  (a resumed prompt cannot be rewritten)`
+                        ? `degraded_from: ${record.degradedFrom}  (decisions can not be rewritten)`
                         : null,
                 ].filter(Boolean).join('\n'))
                 .join('\n\n');
