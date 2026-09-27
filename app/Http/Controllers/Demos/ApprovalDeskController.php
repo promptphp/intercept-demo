@@ -30,6 +30,8 @@ class ApprovalDeskController extends Controller
      *
      * `ToolApprovalGuard` can stop the run here, before the proposal is ever surfaced. The
      * operator does not get to approve something the guard refused to show them.
+     *
+     * The prompt guards can also stop the run here, on the operator's own message.
      */
     public function store(StartApprovalRunRequest $request, PromptInspector $inspector, InterceptLogRecorder $recorder): JsonResponse
     {
@@ -41,6 +43,20 @@ class ApprovalDeskController extends Controller
             return $this->blocked(
                 'The agent proposed a tool call that never made it to your review screen.',
                 $e->getMessage(),
+                $recorder,
+                stillAwaitingApproval: false,
+            );
+        } catch (PromptInjectionGuardException) {
+            return $this->blocked(
+                'Your request contains a prompt injection. It was stopped before it reached the provider.',
+                'Prompt injection attempt detected.',
+                $recorder,
+                stillAwaitingApproval: false,
+            );
+        } catch (PIIRedactorException) {
+            return $this->blocked(
+                'Your request carries high-risk data (a card number or a secret). It was stopped before it reached the provider.',
+                'PII detected in agent prompt.',
                 $recorder,
                 stillAwaitingApproval: false,
             );
